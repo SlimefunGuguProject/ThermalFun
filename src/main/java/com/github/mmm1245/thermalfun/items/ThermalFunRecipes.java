@@ -8,12 +8,17 @@ import org.bukkit.inventory.ItemStack;
 
 public class ThermalFunRecipes {
     public static final RecipeType TYPE_KILL_BLAZE = new RecipeType(ThermalFunMain.createKey("kill_blaze"), ThermalFunStacks.KILL_BLAZE_HEAD);
-    public static final RecipeType TYPE_FORTRESS_LOOTTABLE = new RecipeType(ThermalFunMain.createKey("loottable"), ThermalFunStacks.FORTRESS_LOOTTABLE_CHEST);
+    public static final RecipeType TYPE_FORTRESS_LOOTTABLE = new RecipeType(ThermalFunMain.createKey("fortress_loottable"), ThermalFunStacks.FORTRESS_LOOTTABLE_CHEST);
 
 
     public static final ItemStack[] INACTIVE_THERMAL_WAND = {
             null, SlimefunItems.CARBONADO, null,
             null, new ItemStack(Material.STICK), null,
             null, new ItemStack(Material.STICK), null
+    };
+    public static final ItemStack[] BLAZING_SOUP = {
+            new ItemStack(Material.MAGMA_CREAM), new ItemStack(Material.BLAZE_ROD), new ItemStack(Material.MAGMA_CREAM),
+            new ItemStack(Material.BLAZE_ROD), new ItemStack(Material.CRIMSON_FUNGUS), new ItemStack(Material.BLAZE_ROD),
+            new ItemStack(Material.MAGMA_CREAM), new ItemStack(Material.BOWL), new ItemStack(Material.MAGMA_CREAM)
     };
 }

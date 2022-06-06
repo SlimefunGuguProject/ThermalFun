@@ -45,6 +45,10 @@ public final class ThermalFunMain extends AbstractAddon {
         this.keys = new Keys(this);
         this.heatStorage = new PlayerHeatStorage();
 
+        for(Player player : getServer().getOnlinePlayers()){
+            ThermalFunMain.getHeatStorage().loadPlayer(player);
+        }
+
         this.itemManager = new ItemManager();
         this.itemManager.register(this);
 
@@ -54,7 +58,9 @@ public final class ThermalFunMain extends AbstractAddon {
 
     @Override
     protected void disable() {
-
+        for(Player player : getServer().getOnlinePlayers()){
+            ThermalFunMain.getHeatStorage().savePlayer(player);
+        }
     }
 
 

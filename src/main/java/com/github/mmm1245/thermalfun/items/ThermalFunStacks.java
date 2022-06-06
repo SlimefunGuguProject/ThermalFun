@@ -8,6 +8,7 @@ public class ThermalFunStacks {
 
     public static final SlimefunItemStack INACTIVE_THERMAL_WAND = new SlimefunItemStack("INACTIVE_THERMAL_WAND", Material.STICK, "Inactive Thermal Wand", "Active by killing blaze with it.");
     public static final SlimefunItemStack THERMAL_WAND = new SlimefunItemStack("THERMAL_WAND", Material.BLAZE_ROD, "&cThermal Wand", "Stores heat.");
-    public static final SlimefunItemStack KILL_BLAZE_HEAD = new SlimefunItemStack("BLAZE_HEAD", BLAZE_HEAD_TEXTURE, "&cKill Blaze");
+    public static final SlimefunItemStack KILL_BLAZE_HEAD = new SlimefunItemStack("BLAZE_HEAD", BLAZE_HEAD_TEXTURE, "&cKill Blaze while in offhand");
     public static final SlimefunItemStack FORTRESS_LOOTTABLE_CHEST = new SlimefunItemStack("FORTRESS_LOOTTABLE", Material.CHEST, "Find this item in nether fortress chest");
+    public static final SlimefunItemStack BLAZING_SOUP = new SlimefunItemStack("BLAZING_SOUP", Material.SUSPICIOUS_STEW, "Blazing soup", "Gives you heat");
 }

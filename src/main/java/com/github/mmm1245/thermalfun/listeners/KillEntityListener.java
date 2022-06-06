@@ -30,5 +30,14 @@ public class KillEntityListener implements Listener {
         if(ThermalFunMain.getItemManager().FIRE_UPGRADE.isItem(is)){
             ThermalFunMain.getItemManager().FIRE_UPGRADE.onEntityKill(is, event.getEntityType());
         }
+        if(ThermalFunMain.getItemManager().LAVA_UPGRADE.isItem(is)){
+            ThermalFunMain.getItemManager().LAVA_UPGRADE.onEntityKill(is, event.getEntityType());
+        }
+        if(ThermalFunMain.getItemManager().FIREBALL_UPGRADE.isItem(is)){
+            ThermalFunMain.getItemManager().FIREBALL_UPGRADE.onEntityKill(is, event.getEntityType());
+        }
+        if(ThermalFunMain.getItemManager().FIRE_RES_UPGRADE.isItem(is)){
+            ThermalFunMain.getItemManager().FIRE_RES_UPGRADE.onEntityKill(is, event.getEntityType());
+        }
     }
 }

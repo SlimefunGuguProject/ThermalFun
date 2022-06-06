@@ -4,6 +4,7 @@ import com.github.mmm1245.thermalfun.ThermalFunMain;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
@@ -50,7 +51,7 @@ public class CountUpgradeItem extends SlimefunItem {
     public static class EntityKillStat extends CountableStat{
         public final EntityType entityType;
         public EntityKillStat(NamespacedKey storageKey, int max, EntityType entityType) {
-            super(storageKey, entityType.toString(), max);
+            super(storageKey, WordUtils.capitalize(entityType.toString().replace('_',' ')), max);
             this.entityType = entityType;
         }
     }
