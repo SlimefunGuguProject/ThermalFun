@@ -54,6 +54,13 @@ public final class ThermalFunMain extends AbstractAddon {
 
         this.listenerManager = new ListenerManager();
         this.listenerManager.register(this);
+
+        getServer().getScheduler().runTaskTimer(this, ()->{
+            for(Player player : getServer().getOnlinePlayers()){
+                ItemStack hand = player.getItemInHand();
+                getHeatStorage().forPlayer(player).setShown(getItemManager().THERMAL_WAND.isItem(hand) || getItemManager().BLAZING_SOUP.isItem(hand));
+            }
+        }, 5, 5);
     }
 
     @Override

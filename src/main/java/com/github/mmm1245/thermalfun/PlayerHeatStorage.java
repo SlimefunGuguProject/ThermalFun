@@ -39,6 +39,7 @@ public class PlayerHeatStorage {
             this.bossBar = ThermalFunMain.getInstance().getServer().createBossBar("", BarColor.RED, BarStyle.SOLID);
             this.bossBar.addPlayer(player);
             update();
+            setShown(false);
         }
         private void update(){
             this.bossBar.setProgress(((float)current)/((float)max));
@@ -74,6 +75,9 @@ public class PlayerHeatStorage {
         }
         public int getCurrent() {
             return current;
+        }
+        public void setShown(boolean shown){
+            bossBar.setVisible(shown);
         }
     }
 }
