@@ -21,4 +21,9 @@ public class ThermalFunRecipes {
             new ItemStack(Material.BLAZE_ROD), new ItemStack(Material.CRIMSON_FUNGUS), new ItemStack(Material.BLAZE_ROD),
             new ItemStack(Material.MAGMA_CREAM), new ItemStack(Material.BOWL), new ItemStack(Material.MAGMA_CREAM)
     };
+    public static final ItemStack[] BLAZING_APPLE = {
+            null, new ItemStack(Material.CRIMSON_FUNGUS), null,
+            new ItemStack(Material.BLAZE_ROD), new ItemStack(Material.APPLE), new ItemStack(Material.MAGMA_CREAM),
+            null, new ItemStack(Material.CRIMSON_FUNGUS), null
+    };
 }

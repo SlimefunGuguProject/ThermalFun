@@ -1,5 +1,6 @@
 package com.github.mmm1245.thermalfun;
 
+import com.github.mmm1245.thermalfun.commands.Commands;
 import com.github.mmm1245.thermalfun.items.ItemManager;
 import com.github.mmm1245.thermalfun.listeners.ListenerManager;
 import io.github.mooy1.infinitylib.core.AbstractAddon;
@@ -13,6 +14,9 @@ import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
@@ -21,6 +25,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.units.qual.C;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,6 +37,8 @@ public final class ThermalFunMain extends AbstractAddon {
     private Random random;
     private Keys keys;
     private PlayerHeatStorage heatStorage;
+    private PlayerAbilityStorage abilityStorage;
+    private Commands commands;
 
     public ThermalFunMain() {
         super("mmm1245", "ThermalFun", "master", "auto-update");
@@ -44,9 +51,11 @@ public final class ThermalFunMain extends AbstractAddon {
         this.random = new Random();
         this.keys = new Keys(this);
         this.heatStorage = new PlayerHeatStorage();
+        this.abilityStorage = new PlayerAbilityStorage();
 
         for(Player player : getServer().getOnlinePlayers()){
             ThermalFunMain.getHeatStorage().loadPlayer(player);
+            ThermalFunMain.getAbilityStorage().loadPlayer(player);
         }
 
         this.itemManager = new ItemManager();
@@ -55,10 +64,22 @@ public final class ThermalFunMain extends AbstractAddon {
         this.listenerManager = new ListenerManager();
         this.listenerManager.register(this);
 
+        this.commands = new Commands();
+        this.commands.register(this);
+
         getServer().getScheduler().runTaskTimer(this, ()->{
             for(Player player : getServer().getOnlinePlayers()){
                 ItemStack hand = player.getItemInHand();
-                getHeatStorage().forPlayer(player).setShown(getItemManager().THERMAL_WAND.isItem(hand) || getItemManager().BLAZING_SOUP.isItem(hand));
+                boolean isThermalWand = getItemManager().THERMAL_WAND.isItem(hand);
+
+                getHeatStorage().forPlayer(player).setShown(isThermalWand || getItemManager().BLAZING_SOUP.isItem(hand));
+
+                if(isThermalWand){
+                    EAbility selected = getAbilityStorage().forPlayer(player).getCurrent();
+                    TextComponent text = new TextComponent(selected!=null?selected.userFriendyName:"No abilities");
+                    text.setColor(ChatColor.RED);
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, text);
+                }
             }
         }, 5, 5);
     }
@@ -67,6 +88,7 @@ public final class ThermalFunMain extends AbstractAddon {
     protected void disable() {
         for(Player player : getServer().getOnlinePlayers()){
             ThermalFunMain.getHeatStorage().savePlayer(player);
+            ThermalFunMain.getAbilityStorage().savePlayer(player);
         }
     }
 
@@ -91,5 +113,11 @@ public final class ThermalFunMain extends AbstractAddon {
     }
     public static PlayerHeatStorage getHeatStorage(){
         return getInstance().heatStorage;
+    }
+    public static PlayerAbilityStorage getAbilityStorage(){
+        return getInstance().abilityStorage;
+    }
+    public static Commands getCommands() {
+        return getInstance().commands;
     }
 }

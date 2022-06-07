@@ -6,3 +6,10 @@ authors: [ mmm1245 ]
 description: SlimeFun addon for addonjam 2022
 depend:
   - Slimefun
+commands:
+  heat:
+    description: Sets your heat values
+    usage: /<command> <set/add/max> <value>
+  thermalAbilities:
+    description: Manages your abilities
+    usage: /<command> <learn/revoke> <ability>

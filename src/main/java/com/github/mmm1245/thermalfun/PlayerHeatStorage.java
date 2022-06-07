@@ -60,6 +60,8 @@ public class PlayerHeatStorage {
             this.max = max;
             if(this.max < 1)
                 this.max = 1;
+            if(this.current > this.max)
+                this.current = this.max;
             update();
         }
         public void setCurrent(int current) {
