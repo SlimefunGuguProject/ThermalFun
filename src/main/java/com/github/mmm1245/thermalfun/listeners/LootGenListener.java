@@ -14,8 +14,15 @@ public class LootGenListener implements Listener {
     public void generateLoot(LootGenerateEvent event){
         LootTable lootTable = event.getLootTable();
         if(lootTable.getKey().equals(LootTables.NETHER_BRIDGE.getKey())){
-            if(ThermalFunMain.getRandom().nextBoolean())
+            int randomVal = ThermalFunMain.getRandom().nextInt(4);
+            if(randomVal==0)
                 event.getLoot().add(ThermalFunMain.getItemManager().FIRE_UPGRADE.getItem());
+            else if(randomVal==1)
+                event.getLoot().add(ThermalFunMain.getItemManager().FIRE_RES_UPGRADE.getItem());
+            else if(randomVal==2)
+                event.getLoot().add(ThermalFunMain.getItemManager().FIREBALL_UPGRADE.getItem());
+            else if(randomVal==3)
+                event.getLoot().add(ThermalFunMain.getItemManager().LAVA_UPGRADE.getItem());
         }
     }
 }
