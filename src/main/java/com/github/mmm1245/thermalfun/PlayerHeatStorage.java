@@ -23,6 +23,7 @@ public class PlayerHeatStorage {
         HeatValues values = db.get(player.getUniqueId());
         player.getPersistentDataContainer().set(ThermalFunMain.getKeys().HEAT_MAX, PersistentDataType.INTEGER, values.max);
         player.getPersistentDataContainer().set(ThermalFunMain.getKeys().HEAT_CURRENT, PersistentDataType.INTEGER, values.current);
+        values.removePlayerFromBar();
         db.remove(player.getUniqueId());
     }
     public HeatValues forPlayer(Player player){
@@ -80,6 +81,10 @@ public class PlayerHeatStorage {
         }
         public void setShown(boolean shown){
             bossBar.setVisible(shown);
+        }
+
+        private void removePlayerFromBar(){
+            this.bossBar.removeAll();
         }
     }
 }

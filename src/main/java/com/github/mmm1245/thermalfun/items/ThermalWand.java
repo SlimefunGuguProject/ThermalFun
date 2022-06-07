@@ -83,11 +83,13 @@ public class ThermalWand extends SlimefunItem {
             }
         });
         addItemHandler((EntityInteractHandler) (event, item, offHand) -> {
-            if (cooldowns.contains(event.getPlayer()))
-                return;
-            addCooldown(event.getPlayer());
+            if (event.getPlayer().isSneaking()) {
+                ThermalFunMain.getAbilityStorage().forPlayer(event.getPlayer()).next();
+            } else {
+                if (cooldowns.contains(event.getPlayer()))
+                    return;
+                addCooldown(event.getPlayer());
 
-            if (!event.getPlayer().isSneaking()) {
                 EAbility ability = ThermalFunMain.getAbilityStorage().forPlayer(event.getPlayer()).getCurrent();
                 if (ability == EAbility.FIRE) {
                     if (event.getRightClicked().getFireTicks() > 120)

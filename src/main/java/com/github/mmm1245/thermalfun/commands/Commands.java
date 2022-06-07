@@ -9,6 +9,7 @@ public class Commands {
     public void register(JavaPlugin plugin){
         plugin.getCommand("heat").setExecutor(HEAT);
         plugin.getCommand("heat").setTabCompleter(HEAT);
+
         plugin.getCommand("thermalAbilities").setExecutor(THERMAL_ABILITIES);
         plugin.getCommand("thermalAbilities").setTabCompleter(THERMAL_ABILITIES);
     }

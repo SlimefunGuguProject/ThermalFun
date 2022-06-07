@@ -12,6 +12,7 @@ public class Keys {
     public final NamespacedKey HEAT_CURRENT;
     public final NamespacedKey FIREBALL_CUSTOM;
     public final NamespacedKey PLAYER_ABILITIES;
+
     public Keys(ThermalFunMain plugin) {
         STORED_BLAZES = plugin.createKey("stored_blazes");
         STORED_MAGMA_SLIMES = plugin.createKey("stored_magma_slimes");

@@ -27,6 +27,8 @@ public class KillEntityListener implements Listener {
                 player.getInventory().setItemInOffHand(ThermalFunMain.getItemManager().THERMAL_WAND.getItem());
             }
         }
+
+        //todo: get slimefunitem with registry and use instanceof
         if(ThermalFunMain.getItemManager().FIRE_UPGRADE.isItem(is)){
             ThermalFunMain.getItemManager().FIRE_UPGRADE.onEntityKill(is, event.getEntityType());
         }

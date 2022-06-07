@@ -3,35 +3,22 @@ package com.github.mmm1245.thermalfun;
 import com.github.mmm1245.thermalfun.commands.Commands;
 import com.github.mmm1245.thermalfun.items.ItemManager;
 import com.github.mmm1245.thermalfun.listeners.ListenerManager;
-import io.github.mooy1.infinitylib.core.AbstractAddon;
+import com.github.mmm1245.thermalfun.listeners.PlayerJoinQuitListener;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
-import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.handlers.EntityKillHandler;
-import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.units.qual.C;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public final class ThermalFunMain extends AbstractAddon {
+public final class ThermalFunMain extends JavaPlugin implements SlimefunAddon {
     private ItemManager itemManager;
     private ListenerManager listenerManager;
     private Random random;
@@ -40,12 +27,8 @@ public final class ThermalFunMain extends AbstractAddon {
     private PlayerAbilityStorage abilityStorage;
     private Commands commands;
 
-    public ThermalFunMain() {
-        super("mmm1245", "ThermalFun", "master", "auto-update");
-    }
-
     @Override
-    protected void enable() {
+    public void onEnable() {
         Config cfg = new Config(this);
 
         this.random = new Random();
@@ -54,8 +37,7 @@ public final class ThermalFunMain extends AbstractAddon {
         this.abilityStorage = new PlayerAbilityStorage();
 
         for(Player player : getServer().getOnlinePlayers()){
-            ThermalFunMain.getHeatStorage().loadPlayer(player);
-            ThermalFunMain.getAbilityStorage().loadPlayer(player);
+            PlayerJoinQuitListener.onJoin(player);
         }
 
         this.itemManager = new ItemManager();
@@ -69,7 +51,7 @@ public final class ThermalFunMain extends AbstractAddon {
 
         getServer().getScheduler().runTaskTimer(this, ()->{
             for(Player player : getServer().getOnlinePlayers()){
-                ItemStack hand = player.getItemInHand();
+                ItemStack hand = player.getInventory().getItemInMainHand();
                 boolean isThermalWand = getItemManager().THERMAL_WAND.isItem(hand);
 
                 getHeatStorage().forPlayer(player).setShown(isThermalWand || getItemManager().BLAZING_SOUP.isItem(hand));
@@ -85,10 +67,9 @@ public final class ThermalFunMain extends AbstractAddon {
     }
 
     @Override
-    protected void disable() {
+    public void onDisable() {
         for(Player player : getServer().getOnlinePlayers()){
-            ThermalFunMain.getHeatStorage().savePlayer(player);
-            ThermalFunMain.getAbilityStorage().savePlayer(player);
+            PlayerJoinQuitListener.onQuit(player);
         }
     }
 
@@ -119,5 +100,17 @@ public final class ThermalFunMain extends AbstractAddon {
     }
     public static Commands getCommands() {
         return getInstance().commands;
+    }
+
+    @Nonnull
+    @Override
+    public JavaPlugin getJavaPlugin() {
+        return this;
+    }
+
+    @Nullable
+    @Override
+    public String getBugTrackerURL() {
+        return "https://github.com/mmm1245/ThermalFun/issues";
     }
 }

@@ -14,6 +14,8 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +26,7 @@ public class CountUpgradeItem extends SlimefunItem {
     private final EAbility unlocks;
 
     public CountUpgradeItem(EAbility unlocks, ItemGroup itemGroup, String id, Material material, String name, CountableStat... stats) {
-        super(itemGroup, new SlimefunItemStack(id, material, name, Arrays.stream(stats).map(countableStat -> CountUpgradableItemUtil.getLoreForCountable(countableStat.name, countableStat.max)).toArray(String[]::new)), ThermalFunRecipes.TYPE_FORTRESS_LOOTTABLE, new ItemStack[9]);
+        super(itemGroup, new SlimefunItemStack(id, material, name, Arrays.stream(stats).map(countableStat -> getLoreForCountable(countableStat.name, countableStat.max)).toArray(String[]::new)), ThermalFunRecipes.TYPE_FORTRESS_LOOTTABLE, new ItemStack[9]);
         this.stats = Arrays.asList(stats);
         for (int i = 0; i < stats.length; i++)
             this.stats.get(i).index = i;
@@ -49,14 +51,14 @@ public class CountUpgradeItem extends SlimefunItem {
         for (CountableStat stat : stats) {
             if (stat instanceof EntityKillStat entityKillStat) {
                 if (entityKillStat.entityType == entityType) {
-                    CountUpgradableItemUtil.updateCount(is, entityKillStat.storageKey, entityKillStat.name, entityKillStat.max, entityKillStat.index);
+                    updateCount(is, entityKillStat.storageKey, entityKillStat.name, entityKillStat.max, entityKillStat.index);
                 }
             }
         }
     }
 
     public boolean isItemFinished(ItemStack stack) {
-        return CountUpgradableItemUtil.getTotalFinished(stack) >= stats.size();
+        return getTotalFinished(stack) >= stats.size();
     }
 
     public static class CountableStat {
@@ -79,5 +81,35 @@ public class CountUpgradeItem extends SlimefunItem {
             super(storageKey, WordUtils.capitalize(entityType.toString().replace('_', ' ')), max);
             this.entityType = entityType;
         }
+    }
+
+    private static void updateCount(ItemStack is, NamespacedKey valKey, String name, int max, int loreIndex){
+        ItemMeta meta = is.getItemMeta();
+        int count = meta.getPersistentDataContainer().getOrDefault(valKey, PersistentDataType.INTEGER, 0);
+
+        count++;
+        if(count == max){
+            int total = meta.getPersistentDataContainer().getOrDefault(ThermalFunMain.getKeys().STORED_TOTAL, PersistentDataType.INTEGER, 0);
+            total++;
+            meta.getPersistentDataContainer().set(ThermalFunMain.getKeys().STORED_TOTAL, PersistentDataType.INTEGER, total);
+        }
+        if(count > max)
+            count = max;
+
+        if(meta.hasLore()) {
+            List<String> lore = meta.getLore();
+            if(lore.size() > loreIndex)
+                lore.set(loreIndex, name + ": " + count + "/" + max);
+            meta.setLore(lore);
+        }
+
+        meta.getPersistentDataContainer().set(valKey, PersistentDataType.INTEGER, count);
+        is.setItemMeta(meta);
+    }
+    private static String getLoreForCountable(String name, int max){
+        return name + ": 0/" + max;
+    }
+    private static int getTotalFinished(ItemStack is){
+        return is.getItemMeta().getPersistentDataContainer().getOrDefault(ThermalFunMain.getKeys().STORED_TOTAL, PersistentDataType.INTEGER, 0);
     }
 }

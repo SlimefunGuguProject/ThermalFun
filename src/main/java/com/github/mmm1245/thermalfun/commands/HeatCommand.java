@@ -18,8 +18,6 @@ public class HeatCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player && sender.isOp()) {
-            Player player = (Player) sender;
-            PlayerHeatStorage.HeatValues heatValues = ThermalFunMain.getHeatStorage().forPlayer(player);
             if (args.length != 2)
                 return false;
 
@@ -29,6 +27,9 @@ public class HeatCommand implements CommandExecutor, TabCompleter {
             } catch (NumberFormatException e) {
                 return false;
             }
+
+            Player player = (Player) sender;
+            PlayerHeatStorage.HeatValues heatValues = ThermalFunMain.getHeatStorage().forPlayer(player);
 
             if (args[0].equals("set")) {
                 heatValues.setCurrent(value);
@@ -49,8 +50,8 @@ public class HeatCommand implements CommandExecutor, TabCompleter {
         }
     }
 
-    private static List<String> TABCOMPLETE_FIRST = Arrays.asList("set", "add", "max");
-    private static List<String> TABCOMPLETE_SECOND = Arrays.asList("50", "100", "150","200");
+    private static final List<String> TABCOMPLETE_FIRST = Arrays.asList("set", "add", "max");
+    private static final List<String> TABCOMPLETE_SECOND = Arrays.asList("50", "100", "150","200");
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if(args.length==1){
