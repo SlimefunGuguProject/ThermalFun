@@ -20,16 +20,18 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class CountUpgradeItem extends SlimefunItem {
     private final List<CountableStat> stats;
     private final EAbility unlocks;
 
-    public CountUpgradeItem(EAbility unlocks, ItemGroup itemGroup, String id, Material material, String name, CountableStat... stats) {
+    public CountUpgradeItem(EAbility unlocks, ItemGroup itemGroup, String id, Material material, String name, CountableStat[] stats) {
         super(itemGroup, new SlimefunItemStack(id, material, name, Arrays.stream(stats).map(countableStat -> getLoreForCountable(countableStat.name, countableStat.max)).toArray(String[]::new)), ThermalFunRecipes.TYPE_FORTRESS_LOOTTABLE, new ItemStack[9]);
         this.stats = Arrays.asList(stats);
-        for (int i = 0; i < stats.length; i++)
+        for (int i = 0; i < stats.length; i++) {
             this.stats.get(i).index = i;
+        }
         this.unlocks = unlocks;
     }
 
@@ -80,6 +82,21 @@ public class CountUpgradeItem extends SlimefunItem {
         public EntityKillStat(NamespacedKey storageKey, int max, EntityType entityType) {
             super(storageKey, WordUtils.capitalize(entityType.toString().replace('_', ' ')), max);
             this.entityType = entityType;
+        }
+        public static EntityKillStat fromString(String string){
+            String[] strs = string.split(Pattern.quote(":"));
+            if(strs.length != 2)
+                throw new RuntimeException("Error while parsing config: invalid option: " + string);
+            int count;
+            try {
+                count = Integer.parseInt(strs[1]);
+            } catch (NumberFormatException e){
+                throw new RuntimeException("Error while parsing config: entity count is not number: " + strs[1]);
+            }
+            EntityType type = EntityType.valueOf(strs[0]);
+            if(type==null)
+                throw new RuntimeException("Error while parsing config: entity type not found: " + strs[0]);
+            return new EntityKillStat(ThermalFunMain.createKey("stored_" + type.name()), count, type);
         }
     }
 

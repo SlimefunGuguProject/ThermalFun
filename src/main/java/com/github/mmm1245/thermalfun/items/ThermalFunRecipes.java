@@ -16,6 +16,11 @@ public class ThermalFunRecipes {
             null, new ItemStack(Material.STICK), null,
             null, new ItemStack(Material.STICK), null
     };
+    public static final ItemStack[] THERMAL_WAND = {
+            null, null, null,
+            null, ThermalFunStacks.INACTIVE_THERMAL_WAND, null,
+            null, null, null
+    };
     public static final ItemStack[] BLAZING_SOUP = {
             new ItemStack(Material.MAGMA_CREAM), new ItemStack(Material.BLAZE_ROD), new ItemStack(Material.MAGMA_CREAM),
             new ItemStack(Material.BLAZE_ROD), new ItemStack(Material.CRIMSON_FUNGUS), new ItemStack(Material.BLAZE_ROD),

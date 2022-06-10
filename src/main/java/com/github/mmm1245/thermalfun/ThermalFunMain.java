@@ -40,7 +40,7 @@ public final class ThermalFunMain extends JavaPlugin implements SlimefunAddon {
             PlayerJoinQuitListener.onJoin(player);
         }
 
-        this.itemManager = new ItemManager();
+        this.itemManager = new ItemManager(cfg);
         this.itemManager.register(this);
 
         this.listenerManager = new ListenerManager();
@@ -54,7 +54,9 @@ public final class ThermalFunMain extends JavaPlugin implements SlimefunAddon {
                 ItemStack hand = player.getInventory().getItemInMainHand();
                 boolean isThermalWand = getItemManager().THERMAL_WAND.isItem(hand);
 
-                getHeatStorage().forPlayer(player).setShown(isThermalWand || getItemManager().BLAZING_SOUP.isItem(hand));
+                getHeatStorage().forPlayer(player).setShown(isThermalWand ||
+                                                            getItemManager().BLAZING_SOUP.isItem(hand) ||
+                                                            getItemManager().BLAZING_APPLE.isItem(hand));
 
                 if(isThermalWand){
                     EAbility selected = getAbilityStorage().forPlayer(player).getCurrent();
