@@ -1,6 +1,6 @@
 package com.github.mmm1245.thermalfun.commands;
 
-import com.github.mmm1245.thermalfun.PlayerAbilityStorage;
+import com.github.mmm1245.thermalfun.abilities.PlayerAbilityStorage;
 import com.github.mmm1245.thermalfun.ThermalFunMain;
 import com.github.mmm1245.thermalfun.abilities.Ability;
 import org.bukkit.command.Command;
@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ThermalAbilitiesCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -50,7 +49,10 @@ public class ThermalAbilitiesCommand implements CommandExecutor, TabCompleter {
     }
 
     private static final List<String> TABCOMPLETE_FIRST = Arrays.asList("learn", "revoke");
-    private final List<String> TABCOMPLETE_SECOND = ThermalFunMain.getAbilityRegistery().getAll().stream().toList();
+    private List<String> TABCOMPLETE_SECOND = ThermalFunMain.getAbilityRegistery().getAll().stream().toList();
+    public void reloadTabComplete(){
+        TABCOMPLETE_SECOND = ThermalFunMain.getAbilityRegistery().getAll().stream().toList();
+    }
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if(args.length==1){

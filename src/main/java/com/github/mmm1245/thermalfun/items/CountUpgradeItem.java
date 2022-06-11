@@ -1,6 +1,6 @@
 package com.github.mmm1245.thermalfun.items;
 
-import com.github.mmm1245.thermalfun.PlayerAbilityStorage;
+import com.github.mmm1245.thermalfun.abilities.PlayerAbilityStorage;
 import com.github.mmm1245.thermalfun.ThermalFunMain;
 import com.github.mmm1245.thermalfun.abilities.Ability;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;

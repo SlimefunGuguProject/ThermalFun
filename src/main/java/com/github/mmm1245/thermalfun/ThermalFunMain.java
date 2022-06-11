@@ -1,23 +1,16 @@
 package com.github.mmm1245.thermalfun;
 
 import com.github.mmm1245.thermalfun.abilities.Abilities;
-import com.github.mmm1245.thermalfun.abilities.Ability;
 import com.github.mmm1245.thermalfun.abilities.AbilityRegistry;
+import com.github.mmm1245.thermalfun.abilities.PlayerAbilityStorage;
 import com.github.mmm1245.thermalfun.commands.Commands;
-import com.github.mmm1245.thermalfun.items.HeatAddingItem;
 import com.github.mmm1245.thermalfun.items.ItemManager;
-import com.github.mmm1245.thermalfun.items.ThermalWand;
 import com.github.mmm1245.thermalfun.listeners.ListenerManager;
 import com.github.mmm1245.thermalfun.listeners.PlayerJoinQuitListener;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
@@ -44,7 +37,7 @@ public final class ThermalFunMain extends JavaPlugin implements SlimefunAddon {
         this.heatStorage = new PlayerHeatStorage();
         this.abilityStorage = new PlayerAbilityStorage();
 
-        this.abilities = new Abilities();
+        this.abilities = new Abilities(cfg);
         this.abilities.register();
 
         for(Player player : getServer().getOnlinePlayers()){
