@@ -34,17 +34,23 @@ public class PlayerHeatStorage {
         private int max;
         private int current;
         private BossBar bossBar;
+        private int fakeCurrentModifier;
         private HeatValues(Player player, int max, int current) {
             this.max = max;
             this.current = current;
             this.bossBar = ThermalFunMain.getInstance().getServer().createBossBar("", BarColor.RED, BarStyle.SOLID);
             this.bossBar.addPlayer(player);
+            this.fakeCurrentModifier = 0;
             update();
             setShown(false);
         }
         private void update(){
-            this.bossBar.setProgress(((float)current)/((float)max));
-            this.bossBar.setTitle("heat: " + current + "/" + max);
+            this.bossBar.setProgress(current/((float)max));
+            String modifier = "";
+            if(fakeCurrentModifier != 0){
+                modifier = "(" + (fakeCurrentModifier>0?"+":"") + fakeCurrentModifier + ")";
+            }
+            this.bossBar.setTitle("heat: " + current + modifier + "/" + max);
         }
 
         public void increaseMax(int inc){
@@ -71,6 +77,14 @@ public class PlayerHeatStorage {
                 this.current = this.max;
             if(this.current < 0)
                 this.current = 0;
+            update();
+        }
+
+        public int getFakeCurrentModifier() {
+            return fakeCurrentModifier;
+        }
+        public void setFakeCurrentModifier(int fakeCurrentModifier) {
+            this.fakeCurrentModifier = fakeCurrentModifier;
             update();
         }
         public int getMax() {

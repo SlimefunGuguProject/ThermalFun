@@ -1,6 +1,8 @@
 package com.github.mmm1245.thermalfun.listeners;
 
 import com.github.mmm1245.thermalfun.ThermalFunMain;
+import com.github.mmm1245.thermalfun.items.CountUpgradeItem;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -27,19 +29,9 @@ public class KillEntityListener implements Listener {
                 player.getInventory().setItemInOffHand(ThermalFunMain.getItemManager().THERMAL_WAND.getItem());
             }
         }
-
-        //todo: get slimefunitem with registry and use instanceof
-        if(ThermalFunMain.getItemManager().FIRE_UPGRADE.isItem(is)){
-            ThermalFunMain.getItemManager().FIRE_UPGRADE.onEntityKill(is, event.getEntityType());
-        }
-        if(ThermalFunMain.getItemManager().LAVA_UPGRADE.isItem(is)){
-            ThermalFunMain.getItemManager().LAVA_UPGRADE.onEntityKill(is, event.getEntityType());
-        }
-        if(ThermalFunMain.getItemManager().FIREBALL_UPGRADE.isItem(is)){
-            ThermalFunMain.getItemManager().FIREBALL_UPGRADE.onEntityKill(is, event.getEntityType());
-        }
-        if(ThermalFunMain.getItemManager().FIRE_RES_UPGRADE.isItem(is)){
-            ThermalFunMain.getItemManager().FIRE_RES_UPGRADE.onEntityKill(is, event.getEntityType());
+        SlimefunItem sfItem = SlimefunItem.getByItem(is);
+        if(sfItem instanceof CountUpgradeItem cntUpgrItem){
+            cntUpgrItem.onEntityKill(is, event.getEntityType());
         }
     }
 }

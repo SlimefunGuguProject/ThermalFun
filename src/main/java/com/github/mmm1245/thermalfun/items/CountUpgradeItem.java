@@ -1,32 +1,30 @@
 package com.github.mmm1245.thermalfun.items;
 
-import com.github.mmm1245.thermalfun.EAbility;
 import com.github.mmm1245.thermalfun.PlayerAbilityStorage;
 import com.github.mmm1245.thermalfun.ThermalFunMain;
-import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
+import com.github.mmm1245.thermalfun.abilities.Ability;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.ItemHandler;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
 public class CountUpgradeItem extends SlimefunItem {
     private final List<CountableStat> stats;
-    private final EAbility unlocks;
+    private final Ability unlocks;
 
-    public CountUpgradeItem(EAbility unlocks, ItemGroup itemGroup, String id, Material material, String name, CountableStat[] stats) {
+    public CountUpgradeItem(Ability unlocks, ItemGroup itemGroup, String id, Material material, String name, CountableStat[] stats) {
         super(itemGroup, new SlimefunItemStack(id, material, name, Arrays.stream(stats).map(countableStat -> getLoreForCountable(countableStat.name, countableStat.max)).toArray(String[]::new)), ThermalFunRecipes.TYPE_FORTRESS_LOOTTABLE, new ItemStack[9]);
         this.stats = Arrays.asList(stats);
         for (int i = 0; i < stats.length; i++) {
@@ -41,8 +39,13 @@ public class CountUpgradeItem extends SlimefunItem {
             if (!isItemFinished(e.getItem()))
                 return;
             PlayerAbilityStorage.AbilitiesList abilitiesList = ThermalFunMain.getAbilityStorage().forPlayer(e.getPlayer());
-            if (abilitiesList.learn(unlocks))
+            if (abilitiesList.learn(unlocks)) {
                 e.getPlayer().getInventory().setItem(e.getHand(), null);
+                e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
+            } else {
+                e.getPlayer().sendMessage("You already know this ability");
+                e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.BLOCK_DISPENSER_FAIL, 1, 1);
+            }
         });
     }
 

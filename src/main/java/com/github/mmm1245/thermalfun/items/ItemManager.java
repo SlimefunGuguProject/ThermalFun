@@ -1,6 +1,5 @@
 package com.github.mmm1245.thermalfun.items;
 
-import com.github.mmm1245.thermalfun.EAbility;
 import com.github.mmm1245.thermalfun.ThermalFunMain;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -11,9 +10,6 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class ItemManager {
     public final ItemGroup ITEM_GROUP = new ItemGroup(ThermalFunMain.createKey("thermalfun_category"), new CustomItemStack(Material.BLAZE_ROD, "&cThermalFun"));
@@ -43,7 +39,7 @@ public class ItemManager {
         );
 
         FIRE_UPGRADE = new CountUpgradeItem(
-                EAbility.FIRE,
+                ThermalFunMain.getAbilities().FIRE_ABILITY,
                 ITEM_GROUP,
                 "FIRE_UPGRADE",
                 Material.SKULL_BANNER_PATTERN,
@@ -52,7 +48,7 @@ public class ItemManager {
         );
 
         LAVA_UPGRADE = new CountUpgradeItem(
-                EAbility.LAVA,
+                ThermalFunMain.getAbilities().LAVA_ABILITY,
                 ITEM_GROUP,
                 "LAVA_UPGRADE",
                 Material.SKULL_BANNER_PATTERN,
@@ -61,7 +57,7 @@ public class ItemManager {
         );
 
         FIREBALL_UPGRADE = new CountUpgradeItem(
-                EAbility.FIREBALL,
+                ThermalFunMain.getAbilities().FIREBALL_ABILITY,
                 ITEM_GROUP,
                 "FIREBALL_UPGRADE",
                 Material.SKULL_BANNER_PATTERN,
@@ -70,7 +66,7 @@ public class ItemManager {
         );
 
         FIRE_RES_UPGRADE = new CountUpgradeItem(
-                EAbility.FIRE_RES,
+                ThermalFunMain.getAbilities().FIRE_RES_ABILITY,
                 ITEM_GROUP,
                 "FIRE_RES_UPGRADE",
                 Material.SKULL_BANNER_PATTERN,

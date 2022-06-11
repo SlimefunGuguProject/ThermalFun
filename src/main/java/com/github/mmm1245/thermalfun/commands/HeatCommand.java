@@ -40,6 +40,7 @@ public class HeatCommand implements CommandExecutor, TabCompleter {
                 player.sendMessage("Set heat to " + heatValues.getCurrent());
                 return true;
             } else if (args[0].equals("max")) {
+                heatValues.setMax(value);
                 player.sendMessage("Set max heat to " + heatValues.getMax());
                 return true;
             }

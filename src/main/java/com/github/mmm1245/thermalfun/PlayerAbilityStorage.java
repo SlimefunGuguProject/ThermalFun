@@ -1,5 +1,7 @@
 package com.github.mmm1245.thermalfun;
 
+import com.github.mmm1245.thermalfun.abilities.Abilities;
+import com.github.mmm1245.thermalfun.abilities.Ability;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -7,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PlayerAbilityStorage {
     private final HashMap<UUID, AbilitiesList> db;
@@ -14,23 +17,20 @@ public class PlayerAbilityStorage {
         this.db = new HashMap<>();
     }
     public void loadPlayer(Player player){
-        byte[] abilitiesRaw = player.getPersistentDataContainer().getOrDefault(ThermalFunMain.getKeys().PLAYER_ABILITIES, PersistentDataType.BYTE_ARRAY, new byte[0]);
-        ArrayList<EAbility> abilities = new ArrayList<>();  //todo: maybe use streams
-        for(byte id : abilitiesRaw){
-            EAbility ability = EAbility.forId(id);
-            if(abilities != null)
+        String abilitiesRaw = player.getPersistentDataContainer().getOrDefault(ThermalFunMain.getKeys().PLAYER_ABILITIES, PersistentDataType.STRING, "");
+        ArrayList<Ability> abilities = new ArrayList<>();
+        String[] split = abilitiesRaw.split(",");
+        for(String str : split){
+            Ability ability = ThermalFunMain.getAbilityRegistery().get(str);
+            if(ability != null)
                 abilities.add(ability);
         }
         db.put(player.getUniqueId(), new AbilitiesList(abilities));
     }
     public void savePlayer(Player player){
-        List<EAbility> abilities = db.get(player.getUniqueId()).getAll();
-        byte[] abilitiesRaw = new byte[abilities.size()];   //todo: maybe use streams
-        for(int i = 0;i < abilities.size();i++){
-            abilitiesRaw[i] = abilities.get(i).id;
-        }
-
-        player.getPersistentDataContainer().set(ThermalFunMain.getKeys().PLAYER_ABILITIES, PersistentDataType.BYTE_ARRAY, abilitiesRaw);
+        List<Ability> abilities = db.get(player.getUniqueId()).getAll();
+        String str = abilities.stream().map(ability -> ability.key().toString()).collect(Collectors.joining(","));
+        player.getPersistentDataContainer().set(ThermalFunMain.getKeys().PLAYER_ABILITIES, PersistentDataType.STRING, str);
         db.remove(player.getUniqueId());
     }
     public AbilitiesList forPlayer(Player player){
@@ -38,13 +38,13 @@ public class PlayerAbilityStorage {
     }
 
     public class AbilitiesList {
-        private ArrayList<EAbility> abilities;  //todo: use set
+        private ArrayList<Ability> abilities;
         private int current;
-        private AbilitiesList(ArrayList<EAbility> abilities) {
+        private AbilitiesList(ArrayList<Ability> abilities) {
             this.abilities = abilities;
             this.current = 0;
         }
-        public EAbility getCurrent(){
+        public Ability getCurrent(){
             if(abilities.isEmpty())
                 return null;
             return abilities.get(current);
@@ -54,13 +54,13 @@ public class PlayerAbilityStorage {
                 return;
             this.current = (current+1)%abilities.size();
         }
-        public boolean learn(EAbility ability){
+        public boolean learn(Ability ability){
             if(abilities.contains(ability))
                 return false;
             abilities.add(ability);
             return true;
         }
-        public boolean revoke(EAbility ability){
+        public boolean revoke(Ability ability){
             if(!abilities.contains(ability))
                 return false;
             int index = abilities.indexOf(ability);
@@ -69,7 +69,7 @@ public class PlayerAbilityStorage {
             abilities.remove(ability);
             return true;
         }
-        public List<EAbility> getAll(){
+        public List<Ability> getAll(){
             return Collections.unmodifiableList(abilities);
         }
     }

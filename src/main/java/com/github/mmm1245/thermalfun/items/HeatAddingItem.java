@@ -23,5 +23,7 @@ public class HeatAddingItem extends SlimefunItem {
     public void preRegister() {
         addItemHandler((ItemConsumptionHandler) (e, p, item) -> ThermalFunMain.getHeatStorage().forPlayer(p).increaseCurrent(heat));
     }
-
+    public int getHeat() {
+        return heat;
+    }
 }

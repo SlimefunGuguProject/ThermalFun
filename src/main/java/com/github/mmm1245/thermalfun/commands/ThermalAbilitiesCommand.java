@@ -1,9 +1,8 @@
 package com.github.mmm1245.thermalfun.commands;
 
-import com.github.mmm1245.thermalfun.EAbility;
 import com.github.mmm1245.thermalfun.PlayerAbilityStorage;
-import com.github.mmm1245.thermalfun.PlayerHeatStorage;
 import com.github.mmm1245.thermalfun.ThermalFunMain;
+import com.github.mmm1245.thermalfun.abilities.Ability;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,12 +21,9 @@ public class ThermalAbilitiesCommand implements CommandExecutor, TabCompleter {
             if (args.length != 2)
                 return false;
 
-            EAbility ability;
-            try {
-                ability = EAbility.valueOf(args[1]);
-            } catch (IllegalArgumentException e) {
+            Ability ability = ThermalFunMain.getAbilityRegistery().get(args[1]);
+            if(ability == null)
                 return false;
-            }
 
             PlayerAbilityStorage.AbilitiesList abilitiesList = ThermalFunMain.getAbilityStorage().forPlayer(player);
 
@@ -54,7 +50,7 @@ public class ThermalAbilitiesCommand implements CommandExecutor, TabCompleter {
     }
 
     private static final List<String> TABCOMPLETE_FIRST = Arrays.asList("learn", "revoke");
-    private static final List<String> TABCOMPLETE_SECOND = Arrays.stream(EAbility.values()).map(ability -> ability.name()).collect(Collectors.toList());
+    private final List<String> TABCOMPLETE_SECOND = ThermalFunMain.getAbilityRegistery().getAll().stream().toList();
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if(args.length==1){

@@ -1,10 +1,16 @@
 package com.github.mmm1245.thermalfun;
 
+import com.github.mmm1245.thermalfun.abilities.Abilities;
+import com.github.mmm1245.thermalfun.abilities.Ability;
+import com.github.mmm1245.thermalfun.abilities.AbilityRegistry;
 import com.github.mmm1245.thermalfun.commands.Commands;
+import com.github.mmm1245.thermalfun.items.HeatAddingItem;
 import com.github.mmm1245.thermalfun.items.ItemManager;
+import com.github.mmm1245.thermalfun.items.ThermalWand;
 import com.github.mmm1245.thermalfun.listeners.ListenerManager;
 import com.github.mmm1245.thermalfun.listeners.PlayerJoinQuitListener;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
@@ -26,6 +32,8 @@ public final class ThermalFunMain extends JavaPlugin implements SlimefunAddon {
     private PlayerHeatStorage heatStorage;
     private PlayerAbilityStorage abilityStorage;
     private Commands commands;
+    private AbilityRegistry abilityRegistry = new AbilityRegistry();
+    private Abilities abilities;
 
     @Override
     public void onEnable() {
@@ -35,6 +43,9 @@ public final class ThermalFunMain extends JavaPlugin implements SlimefunAddon {
         this.keys = new Keys(this);
         this.heatStorage = new PlayerHeatStorage();
         this.abilityStorage = new PlayerAbilityStorage();
+
+        this.abilities = new Abilities();
+        this.abilities.register();
 
         for(Player player : getServer().getOnlinePlayers()){
             PlayerJoinQuitListener.onJoin(player);
@@ -49,23 +60,7 @@ public final class ThermalFunMain extends JavaPlugin implements SlimefunAddon {
         this.commands = new Commands();
         this.commands.register(this);
 
-        getServer().getScheduler().runTaskTimer(this, ()->{
-            for(Player player : getServer().getOnlinePlayers()){
-                ItemStack hand = player.getInventory().getItemInMainHand();
-                boolean isThermalWand = getItemManager().THERMAL_WAND.isItem(hand);
-
-                getHeatStorage().forPlayer(player).setShown(isThermalWand ||
-                                                            getItemManager().BLAZING_SOUP.isItem(hand) ||
-                                                            getItemManager().BLAZING_APPLE.isItem(hand));
-
-                if(isThermalWand){
-                    EAbility selected = getAbilityStorage().forPlayer(player).getCurrent();
-                    TextComponent text = new TextComponent(selected!=null?selected.userFriendyName:"No abilities");
-                    text.setColor(ChatColor.RED);
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, text);
-                }
-            }
-        }, 5, 5);
+        getServer().getScheduler().runTaskTimer(this, new PlayerUIUpdater(), 5, 5);
     }
 
     @Override
@@ -73,6 +68,7 @@ public final class ThermalFunMain extends JavaPlugin implements SlimefunAddon {
         for(Player player : getServer().getOnlinePlayers()){
             PlayerJoinQuitListener.onQuit(player);
         }
+        abilityRegistry.clear();
     }
 
 
@@ -102,6 +98,12 @@ public final class ThermalFunMain extends JavaPlugin implements SlimefunAddon {
     }
     public static Commands getCommands() {
         return getInstance().commands;
+    }
+    public static AbilityRegistry getAbilityRegistery() {
+        return getInstance().abilityRegistry;
+    }
+    public static Abilities getAbilities() {
+        return getInstance().abilities;
     }
 
     @Nonnull
