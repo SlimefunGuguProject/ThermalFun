@@ -1,6 +1,6 @@
 package com.github.mmm1245.thermalfun;
 
-import com.github.mmm1245.thermalfun.abilities.Abilities;
+import com.github.mmm1245.thermalfun.abilities.ThermalFunAbilities;
 import com.github.mmm1245.thermalfun.abilities.AbilityRegistry;
 import com.github.mmm1245.thermalfun.abilities.PlayerAbilityStorage;
 import com.github.mmm1245.thermalfun.commands.Commands;
@@ -26,7 +26,7 @@ public final class ThermalFunMain extends JavaPlugin implements SlimefunAddon {
     private PlayerAbilityStorage abilityStorage;
     private Commands commands;
     private AbilityRegistry abilityRegistry = new AbilityRegistry();
-    private Abilities abilities;
+    private ThermalFunAbilities abilities;
 
     @Override
     public void onEnable() {
@@ -37,7 +37,7 @@ public final class ThermalFunMain extends JavaPlugin implements SlimefunAddon {
         this.heatStorage = new PlayerHeatStorage();
         this.abilityStorage = new PlayerAbilityStorage();
 
-        this.abilities = new Abilities(cfg);
+        this.abilities = new ThermalFunAbilities(cfg);
         this.abilities.register();
 
         for(Player player : getServer().getOnlinePlayers()){
@@ -95,7 +95,7 @@ public final class ThermalFunMain extends JavaPlugin implements SlimefunAddon {
     public static AbilityRegistry getAbilityRegistery() {
         return getInstance().abilityRegistry;
     }
-    public static Abilities getAbilities() {
+    public static ThermalFunAbilities getAbilities() {
         return getInstance().abilities;
     }
 

@@ -14,12 +14,12 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Optional;
 
-public class Abilities {
+public class ThermalFunAbilities {
     public final Ability FIRE_ABILITY;
     public final Ability LAVA_ABILITY;
     public final Ability FIREBALL_ABILITY;
     public final Ability FIRE_RES_ABILITY;
-    public Abilities(Config config){
+    public ThermalFunAbilities(Config config){
         int fireUpgradeCost = config.getInt("fire_upgrade_cost");
         FIRE_ABILITY = new Ability(
                 ThermalFunMain.createKey("fire_upgrade"),
@@ -46,6 +46,7 @@ public class Abilities {
                     }
                 }
         );
+
         int lavaUpgradeCost = config.getInt("lava_upgrade_cost");
         LAVA_ABILITY = new Ability(
                 ThermalFunMain.createKey("lava_upgrade"),
@@ -75,6 +76,7 @@ public class Abilities {
                     }
                 }
         );
+
         int fireballUpgradeCost = config.getInt("fireball_upgrade_cost");
         FIREBALL_ABILITY = new Ability(
                 ThermalFunMain.createKey("fireball_upgrade"),
@@ -93,6 +95,7 @@ public class Abilities {
                 },
                 null
         );
+
         int fireResUpgradeCost = config.getInt("fire_res_upgrade_cost");
         FIRE_RES_ABILITY = new Ability(
                 ThermalFunMain.createKey("fire_res_upgrade"),

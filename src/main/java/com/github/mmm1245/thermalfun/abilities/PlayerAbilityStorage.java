@@ -1,11 +1,6 @@
 package com.github.mmm1245.thermalfun.abilities;
 
 import com.github.mmm1245.thermalfun.ThermalFunMain;
-import com.github.mmm1245.thermalfun.abilities.Abilities;
-import com.github.mmm1245.thermalfun.abilities.Ability;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
