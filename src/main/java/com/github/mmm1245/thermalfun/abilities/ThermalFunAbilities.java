@@ -31,7 +31,7 @@ public class ThermalFunAbilities {
                     if (clicked.isPresent()) {
                         Block target = clicked.get().getRelative(event.getClickedFace());
                         if (target.isEmpty() && target.getRelative(0, -1, 0).getType().isSolid()) {
-                            if (checkHasHeatAndDecrease(event.getPlayer(), fireUpgradeCost)) {
+                            if (Ability.checkHasHeatAndDecrease(event.getPlayer(), fireUpgradeCost)) {
                                 target.setType(Material.FIRE);
                                 event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 1);
                             }
@@ -41,7 +41,7 @@ public class ThermalFunAbilities {
                 (event, item, offHand) -> {
                     if (event.getRightClicked().getFireTicks() > 120)
                         return;
-                    if (checkHasHeatAndDecrease(event.getPlayer(), fireUpgradeCost)) {
+                    if (Ability.checkHasHeatAndDecrease(event.getPlayer(), fireUpgradeCost)) {
                         event.getRightClicked().setFireTicks(240);
                         event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 1);
                     }
@@ -58,7 +58,7 @@ public class ThermalFunAbilities {
                     if (clicked.isPresent()) {
                         Block target = clicked.get().getRelative(event.getClickedFace());
                         if (target.isEmpty()) {
-                            if (checkHasHeatAndDecrease(event.getPlayer(), lavaUpgradeCost)) {
+                            if (Ability.checkHasHeatAndDecrease(event.getPlayer(), lavaUpgradeCost)) {
                                 target.setType(Material.LAVA);
                                 event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ITEM_BUCKET_EMPTY_LAVA, 1, 1);
                             }
@@ -67,7 +67,7 @@ public class ThermalFunAbilities {
                 },
                 (event, item, offHand) -> {
                     if (event.getRightClicked() instanceof Slime slime) {
-                        if (checkHasHeatAndDecrease(event.getPlayer(), lavaUpgradeCost)) {
+                        if (Ability.checkHasHeatAndDecrease(event.getPlayer(), lavaUpgradeCost)) {
                             MagmaCube magmaCube = (MagmaCube) slime.getWorld().spawnEntity(slime.getLocation(), EntityType.MAGMA_CUBE);
                             magmaCube.setSize(slime.getSize());
                             magmaCube.setHealth(slime.getHealth());
@@ -84,7 +84,7 @@ public class ThermalFunAbilities {
                 "Fireball Upgrade",
                 fireballUpgradeCost,
                 event -> {
-                    if (checkHasHeatAndDecrease(event.getPlayer(), fireballUpgradeCost)) {
+                    if (Ability.checkHasHeatAndDecrease(event.getPlayer(), fireballUpgradeCost)) {
                         Fireball fireball = (Fireball) event.getPlayer().getWorld().spawnEntity(event.getPlayer().getEyeLocation(), EntityType.FIREBALL);
                         fireball.setYield(3);
                         fireball.setIsIncendiary(false);
@@ -103,14 +103,14 @@ public class ThermalFunAbilities {
                 "Fire Resistance Upgrade",
                 fireResUpgradeCost,
                 event -> {
-                    if (checkHasHeatAndDecrease(event.getPlayer(), fireResUpgradeCost)) {
+                    if (Ability.checkHasHeatAndDecrease(event.getPlayer(), fireResUpgradeCost)) {
                         event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 4 * 60 * 20, 0));
                         event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ITEM_BOTTLE_EMPTY, 1, 1);
                     }
                 },
                 (event, item, offHand) -> {
                     if (event.getRightClicked() instanceof LivingEntity livingEntity) {
-                        if (checkHasHeatAndDecrease(event.getPlayer(), fireResUpgradeCost)) {
+                        if (Ability.checkHasHeatAndDecrease(event.getPlayer(), fireResUpgradeCost)) {
                             livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 4 * 60 * 20, 0));
                             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ITEM_BOTTLE_EMPTY, 1, 1);
                         }
@@ -123,16 +123,5 @@ public class ThermalFunAbilities {
         LAVA_ABILITY.register();
         FIREBALL_ABILITY.register();
         FIRE_RES_ABILITY.register();
-    }
-
-    public static boolean checkHasHeatAndDecrease(Player player, int heat) {
-        PlayerHeatStorage.HeatValues heatVals = ThermalFunMain.getHeatStorage().forPlayer(player);
-        if (heatVals.getCurrent() < heat) {
-            player.sendMessage(ChatColor.YELLOW + "Not enough heat, you have " + heatVals.getCurrent() + "/" + heat);
-            player.playSound(player.getLocation(), Sound.BLOCK_DISPENSER_FAIL, 1, 1);
-            return false;
-        }
-        heatVals.increaseCurrent(-heat);
-        return true;
     }
 }
