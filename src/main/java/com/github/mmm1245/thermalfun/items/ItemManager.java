@@ -1,6 +1,7 @@
 package com.github.mmm1245.thermalfun.items;
 
 import com.github.mmm1245.thermalfun.ThermalFunMain;
+import com.github.mmm1245.thermalfun.api.CountUpgradeItem;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -10,6 +11,7 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public class ItemManager {
     public final ItemGroup ITEM_GROUP = new ItemGroup(ThermalFunMain.createKey("thermalfun_category"), new CustomItemStack(Material.BLAZE_ROD, "&cThermalFun"));
@@ -44,6 +46,7 @@ public class ItemManager {
                 "FIRE_UPGRADE",
                 Material.SKULL_BANNER_PATTERN,
                 ChatColor.RED + "Fire Upgrade",
+                ThermalFunRecipes.TYPE_FORTRESS_LOOTTABLE, new ItemStack[9],
                 cfg.getStringList("fire_upgrade").stream().map(CountUpgradeItem.EntityKillStat::fromString).toArray(CountUpgradeItem.CountableStat[]::new)
         );
 
@@ -53,6 +56,7 @@ public class ItemManager {
                 "LAVA_UPGRADE",
                 Material.SKULL_BANNER_PATTERN,
                 ChatColor.RED + "Lava Upgrade",
+                ThermalFunRecipes.TYPE_FORTRESS_LOOTTABLE, new ItemStack[9],
                 cfg.getStringList("lava_upgrade").stream().map(CountUpgradeItem.EntityKillStat::fromString).toArray(CountUpgradeItem.CountableStat[]::new)
         );
 
@@ -62,6 +66,7 @@ public class ItemManager {
                 "FIREBALL_UPGRADE",
                 Material.SKULL_BANNER_PATTERN,
                 ChatColor.RED + "Fireball Upgrade",
+                ThermalFunRecipes.TYPE_FORTRESS_LOOTTABLE, new ItemStack[9],
                 cfg.getStringList("fireball_upgrade").stream().map(CountUpgradeItem.EntityKillStat::fromString).toArray(CountUpgradeItem.CountableStat[]::new)
         );
 
@@ -71,6 +76,7 @@ public class ItemManager {
                 "FIRE_RES_UPGRADE",
                 Material.SKULL_BANNER_PATTERN,
                 ChatColor.RED + "Fire Resistance Upgrade",
+                ThermalFunRecipes.TYPE_FORTRESS_LOOTTABLE, new ItemStack[9],
                 cfg.getStringList("fire_res_upgrade").stream().map(CountUpgradeItem.EntityKillStat::fromString).toArray(CountUpgradeItem.CountableStat[]::new)
         );
         int blazing_soup_heat = cfg.getInt("blazing_soup_heat");

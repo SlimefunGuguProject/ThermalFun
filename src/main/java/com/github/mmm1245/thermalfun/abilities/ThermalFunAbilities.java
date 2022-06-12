@@ -2,6 +2,7 @@ package com.github.mmm1245.thermalfun.abilities;
 
 import com.github.mmm1245.thermalfun.PlayerHeatStorage;
 import com.github.mmm1245.thermalfun.ThermalFunMain;
+import com.github.mmm1245.thermalfun.api.Ability;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

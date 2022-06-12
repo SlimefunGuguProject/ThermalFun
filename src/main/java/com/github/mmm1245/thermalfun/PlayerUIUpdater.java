@@ -1,6 +1,6 @@
 package com.github.mmm1245.thermalfun;
 
-import com.github.mmm1245.thermalfun.abilities.Ability;
+import com.github.mmm1245.thermalfun.api.Ability;
 import com.github.mmm1245.thermalfun.abilities.PlayerAbilityStorage;
 import com.github.mmm1245.thermalfun.items.HeatAddingItem;
 import com.github.mmm1245.thermalfun.items.ThermalWand;

@@ -1,4 +1,4 @@
-package com.github.mmm1245.thermalfun.abilities;
+package com.github.mmm1245.thermalfun.api;
 
 import com.github.mmm1245.thermalfun.ThermalFunMain;
 import io.github.thebusybiscuit.slimefun4.core.handlers.EntityInteractHandler;

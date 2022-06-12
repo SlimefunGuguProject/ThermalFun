@@ -1,7 +1,7 @@
 package com.github.mmm1245.thermalfun.items;
 
 import com.github.mmm1245.thermalfun.ThermalFunMain;
-import com.github.mmm1245.thermalfun.abilities.Ability;
+import com.github.mmm1245.thermalfun.api.Ability;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;

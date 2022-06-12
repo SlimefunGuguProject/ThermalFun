@@ -1,6 +1,7 @@
 package com.github.mmm1245.thermalfun.abilities;
 
 import com.github.mmm1245.thermalfun.ThermalFunMain;
+import com.github.mmm1245.thermalfun.api.Ability;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 

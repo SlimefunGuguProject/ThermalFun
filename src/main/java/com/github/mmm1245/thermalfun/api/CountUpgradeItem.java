@@ -1,11 +1,13 @@
-package com.github.mmm1245.thermalfun.items;
+package com.github.mmm1245.thermalfun.api;
 
 import com.github.mmm1245.thermalfun.abilities.PlayerAbilityStorage;
 import com.github.mmm1245.thermalfun.ThermalFunMain;
-import com.github.mmm1245.thermalfun.abilities.Ability;
+import com.github.mmm1245.thermalfun.api.Ability;
+import com.github.mmm1245.thermalfun.items.ThermalFunRecipes;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
@@ -24,8 +26,8 @@ public class CountUpgradeItem extends SlimefunItem {
     private final List<CountableStat> stats;
     private final Ability unlocks;
 
-    public CountUpgradeItem(Ability unlocks, ItemGroup itemGroup, String id, Material material, String name, CountableStat[] stats) {
-        super(itemGroup, new SlimefunItemStack(id, material, name, Arrays.stream(stats).map(countableStat -> getLoreForCountable(countableStat.name, countableStat.max)).toArray(String[]::new)), ThermalFunRecipes.TYPE_FORTRESS_LOOTTABLE, new ItemStack[9]);
+    public CountUpgradeItem(Ability unlocks, ItemGroup itemGroup, String id, Material material, String name, RecipeType recipeType, ItemStack[] recipe, CountableStat[] stats) {
+        super(itemGroup, new SlimefunItemStack(id, material, name, Arrays.stream(stats).map(countableStat -> getLoreForCountable(countableStat.name, countableStat.max)).toArray(String[]::new)), recipeType, recipe);
         this.stats = Arrays.asList(stats);
         for (int i = 0; i < stats.length; i++) {
             this.stats.get(i).index = i;
