@@ -14,7 +14,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemManager {
-    public final ItemGroup ITEM_GROUP = new ItemGroup(ThermalFunMain.createKey("thermalfun_category"), new CustomItemStack(Material.BLAZE_ROD, "&cThermalFun"));
+    public final ItemGroup ITEM_GROUP = new ItemGroup(ThermalFunMain.createKey("thermalfun_category"), new CustomItemStack(Material.BLAZE_ROD, "&c灼岩科技"));
 
     public final SlimefunItem INACTIVE_THERMAL_WAND;
     public final SlimefunItem THERMAL_WAND;
