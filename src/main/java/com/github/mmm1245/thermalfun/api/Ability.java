@@ -18,7 +18,7 @@ public record Ability(NamespacedKey key, String userFriendlyName, int cost, Item
     public static boolean checkHasHeatAndDecrease(Player player, int heat) {
         PlayerHeatStorage.HeatValues heatVals = ThermalFunMain.getHeatStorage().forPlayer(player);
         if (heatVals.getCurrent() < heat) {
-            player.sendMessage(ChatColor.YELLOW + "Not enough heat, you have " + heatVals.getCurrent() + "/" + heat);
+            player.sendMessage(ChatColor.YELLOW + "您没有足够生命值, 您目前仅有" + heatVals.getCurrent() + "/" + heat);
             player.playSound(player.getLocation(), Sound.BLOCK_DISPENSER_FAIL, 1, 1);
             return false;
         }
