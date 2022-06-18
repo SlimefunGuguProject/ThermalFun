@@ -1,6 +1,6 @@
 # 灼岩科技
 A slimefun plugin that adds thermal wand, magical wind that performs different spells that you have to first learn by exploring the nether.
-## Video Tutorial
+## 展示视频
 https://www.youtube.com/watch?v=H8IAiVYIR3U&t=20s&ab_channel=mmm
 ## Config
 ```text
