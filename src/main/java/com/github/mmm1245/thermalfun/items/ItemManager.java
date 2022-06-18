@@ -45,7 +45,7 @@ public class ItemManager {
                 ITEM_GROUP,
                 "FIRE_UPGRADE",
                 Material.SKULL_BANNER_PATTERN,
-                ChatColor.RED + "Fire Upgrade",
+                ChatColor.RED + "火焰升级",
                 ThermalFunRecipes.TYPE_FORTRESS_LOOTTABLE, new ItemStack[9],
                 cfg.getStringList("fire_upgrade").stream().map(CountUpgradeItem.EntityKillStat::fromString).toArray(CountUpgradeItem.CountableStat[]::new)
         );
@@ -55,7 +55,7 @@ public class ItemManager {
                 ITEM_GROUP,
                 "LAVA_UPGRADE",
                 Material.SKULL_BANNER_PATTERN,
-                ChatColor.RED + "Lava Upgrade",
+                ChatColor.RED + "岩浆升级",
                 ThermalFunRecipes.TYPE_FORTRESS_LOOTTABLE, new ItemStack[9],
                 cfg.getStringList("lava_upgrade").stream().map(CountUpgradeItem.EntityKillStat::fromString).toArray(CountUpgradeItem.CountableStat[]::new)
         );
@@ -65,7 +65,7 @@ public class ItemManager {
                 ITEM_GROUP,
                 "FIREBALL_UPGRADE",
                 Material.SKULL_BANNER_PATTERN,
-                ChatColor.RED + "Fireball Upgrade",
+                ChatColor.RED + "火球升级",
                 ThermalFunRecipes.TYPE_FORTRESS_LOOTTABLE, new ItemStack[9],
                 cfg.getStringList("fireball_upgrade").stream().map(CountUpgradeItem.EntityKillStat::fromString).toArray(CountUpgradeItem.CountableStat[]::new)
         );
@@ -75,7 +75,7 @@ public class ItemManager {
                 ITEM_GROUP,
                 "FIRE_RES_UPGRADE",
                 Material.SKULL_BANNER_PATTERN,
-                ChatColor.RED + "Fire Resistance Upgrade",
+                ChatColor.RED + "抗火升级",
                 ThermalFunRecipes.TYPE_FORTRESS_LOOTTABLE, new ItemStack[9],
                 cfg.getStringList("fire_res_upgrade").stream().map(CountUpgradeItem.EntityKillStat::fromString).toArray(CountUpgradeItem.CountableStat[]::new)
         );
@@ -83,7 +83,7 @@ public class ItemManager {
         BLAZING_SOUP = new HeatAddingItem(
             blazing_soup_heat,
             ITEM_GROUP,
-            new SlimefunItemStack("BLAZING_SOUP", Material.SUSPICIOUS_STEW, "&cBlazing Soup", "Gives you " + blazing_soup_heat + " heat."),
+            new SlimefunItemStack("BLAZING_SOUP", Material.SUSPICIOUS_STEW, "&c热汤", "给予你" + blazing_soup_heat + "生命值"),
             RecipeType.MAGIC_WORKBENCH,
             ThermalFunRecipes.BLAZING_SOUP
         );
@@ -91,7 +91,7 @@ public class ItemManager {
         BLAZING_APPLE = new HeatAddingItem(
             blazing_apple_heat,
             ITEM_GROUP,
-            new SlimefunItemStack("BLAZING_APPLE", Material.APPLE, "&cBlazing Apple", "Gives you " + blazing_apple_heat + " heat."),
+            new SlimefunItemStack("BLAZING_APPLE", Material.APPLE, "&c烤苹果", "给予你" + blazing_apple_heat + "生命值"),
             RecipeType.MAGIC_WORKBENCH,
             ThermalFunRecipes.BLAZING_APPLE
         );
