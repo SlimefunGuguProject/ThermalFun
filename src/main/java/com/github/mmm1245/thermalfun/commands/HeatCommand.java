@@ -33,20 +33,20 @@ public class HeatCommand implements CommandExecutor, TabCompleter {
 
             if (args[0].equals("set")) {
                 heatValues.setCurrent(value);
-                player.sendMessage("Set heat to " + heatValues.getCurrent());
+                player.sendMessage("设置生命值至" + heatValues.getCurrent());
                 return true;
             } else if (args[0].equals("add")) {
                 heatValues.increaseCurrent(value);
-                player.sendMessage("Set heat to " + heatValues.getCurrent());
+                player.sendMessage("设置生命值至" + heatValues.getCurrent());
                 return true;
             } else if (args[0].equals("max")) {
                 heatValues.setMax(value);
-                player.sendMessage("Set max heat to " + heatValues.getMax());
+                player.sendMessage("设置最大生命值至" + heatValues.getMax());
                 return true;
             }
             return false;
         } else {
-            sender.sendMessage("Must be ran by player with op permissions");
+            sender.sendMessage("您必须拥有op权限来执行这个指令");
             return true;
         }
     }
