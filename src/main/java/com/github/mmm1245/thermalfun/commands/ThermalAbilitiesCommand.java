@@ -28,22 +28,22 @@ public class ThermalAbilitiesCommand implements CommandExecutor, TabCompleter {
 
             if (args[0].equals("learn")) {
                 if(abilitiesList.learn(ability)){
-                    player.sendMessage("Learned ability " + args[1]);
+                    player.sendMessage("已学习技能" + args[1]);
                 } else {
-                    player.sendMessage("You already know ability " + args[1]);
+                    player.sendMessage("您已学习技能" + args[1]);
                 }
                 return true;
             } else if (args[0].equals("revoke")) {
                 if(abilitiesList.revoke(ability)) {
-                    player.sendMessage("Revoked ability " + args[1]);
+                    player.sendMessage("已撤销技能" + args[1]);
                 } else {
-                    player.sendMessage("Player doesnt have " + args[1]);
+                    player.sendMessage("玩家技能已被撤销" + args[1]);
                 }
                 return true;
             }
             return false;
         } else {
-            sender.sendMessage("Must be ran by player with op permissions");
+            sender.sendMessage("您必须拥有op权限来执行这个指令");
             return true;
         }
     }
